@@ -3,9 +3,9 @@
 Project for a data intensive computing class. The specification demands support 
 for 2 operations:
 
-- put <key> <value>
+- put *key* *value*
 
-- get <key>
+- get *key*
 
 Depending on the value, the key-value pair should be stored on 1 of 2 remote nodes, 
 with 1 node storing even values and the other node storing odd values.
