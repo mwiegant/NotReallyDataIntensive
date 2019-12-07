@@ -1,0 +1,16 @@
+# clear the screen
+# clear
+
+# some screen filler
+# echo ""
+# echo "      --- Nodejs BASIC ---"
+# echo "      |     v 1.0.0      |"
+# echo "      --------------------"
+# echo "|"
+# echo "|"
+# echo ""
+
+# start the node server
+echo "Starting server. . ."
+echo ""
+PORT=5000 NODE_ENV=dev node bin/www

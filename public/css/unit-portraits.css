@@ -1,0 +1,72 @@
+.upt-name {
+  margin: 8px 0 8px 10px;
+  font-size: 20px;
+  font-style: italic;
+}
+
+.upt-keywords {
+  margin: 0px 0 8px 25px;
+  font-size: 14px;
+}
+
+.upt-stats {
+  margin: 20px 5px 0px 5px;
+  height: 220px;
+}
+
+.upt-desc {
+  margin: 10px 0 8px 10px;
+  width: 218px;
+  float: left;
+}
+
+.upt-desc label {
+  margin-right: 20px;
+}
+
+.upt-desc select {
+  float: right;
+  width: 120px;
+}
+
+/* Unused? */
+/*.upt-desc input {*/
+/*  float: right;*/
+/*  width: 120px;*/
+/*}*/
+
+.upt-desc-spacer {
+  margin-bottom: 5px;
+}
+
+.upt-troops {
+  display: inline-block;
+  width: 106px;
+}
+
+.upt-table {
+  float: right;
+  margin-right: 50px;
+}
+
+.upt-table input {
+  width: 20px;
+}
+
+.upt-notes {
+  margin: 0px 0px 20px 5px;
+}
+
+.upt-notes input {
+  width: 500px;
+}
+
+.upt-btns {
+  text-align: right;
+  margin-right: 5px;
+  height: 35px;
+}
+
+.upt-p {
+  margin: 0px 0px 0px 5px;
+}

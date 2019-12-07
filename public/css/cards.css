@@ -1,0 +1,47 @@
+div.units-selector-box {
+  border-bottom: 1px solid black;
+  height: 36px;
+  margin-bottom: 10px;
+}
+
+button.units-selector-units {
+  height: 30px;
+  float: left;
+  margin: 2px 0px 2px 80px;
+}
+
+button.units-selector-hostiles {
+  height: 30px;
+  float: right;
+  margin: 2px 80px 2px 0px;
+}
+
+p.property {
+  padding-left: 5px;
+}
+
+.card {
+  width: 400px;
+  height: 150px;
+  border: 2px solid black;
+  position:relative;
+  margin: 5px 0 10px 5px;
+}
+
+.card p {
+  margin: 8px 0 8px 5px;
+}
+
+.card i {
+  margin: 8px 0 8px 10px;
+  font-size: 20px;
+}
+
+div.stats-box {
+  width: 48%;
+  /*height: 150px;*/
+}
+
+div.stats-box p {
+  margin: 6px 0 6px 5px;
+}

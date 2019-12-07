@@ -1,0 +1,77 @@
+
+
+<div class="main-col left-col-encounters">
+
+  <div ng-repeat="unit in availableUnits">
+    <div class="enc-unit-card">
+      <i>{{unit.Name.length > 20 ? unit.Name.substr(0,20) + '...' : unit.Name}}</i>
+      <p>{{unit.Keywords}}</p>
+      <hr>
+      <div class="enc-stats-box left">
+        <p>Attack: 1d20 + {{unit.ATT + unit.MAN_ATT}}</p>
+        <p>Power: 1d20 + {{unit.PWR + unit.MAN_PWR}}</p>
+        <p>Morale: 1d20 + {{unit.MOR + unit.MAN_MOR}}</p>
+      </div>
+
+      <div class="enc-stats-box right">
+        <p>Defense: {{unit.DEF + unit.MAN_DEF}}</p>
+        <p>Toughness: {{unit.TGH + unit.MAN_TGH}}</p>
+        <p>Strength: {{unit.STR}} / {{unit.MAX_STR}}</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<div class="main-col right-col-encounters">
+
+  <div class="enc-encounters-carousel">
+    <button class="move-btn enc-btn-encounters-left" ng-click="nextEncounter(-1)"><</button>
+
+    <div class="card enc-selected-encounter">
+      <i>{{selectedEncounter.Name}}</i>
+      <hr>
+      <div class="stats-box">
+        <p>Status: {{selectedEncounter.Status}}</p>
+        <p>Unit: {{selectedEncounter.SelectedHostile.Name}}</p>
+      </div>
+    </div>
+
+    <button class="move-btn enc-btn-encounters-right" ng-click="nextEncounter(1)">></button>
+  </div>
+
+  <div class="enc-fight-container">
+    <button class="enc-fight-btn" ng-hide="inCombat" ng-click="startCombat()">FIGHT</button>
+    <button class="enc-fight-btn" ng-show="inCombat" ng-click="stopCombat()">End Combat</button>
+<!--    <br>-->
+
+    <div class="enc-fight-text">
+      <textarea readonly id="fight-text"></textarea>
+    </div>
+
+  </div>
+
+  <div class="enc-units-carousel">
+    <button class="move-btn enc-btn-encounters-left" ng-click="nextUnit(-1)"><</button>
+
+    <div class="card enc-selected-unit">
+      <i>{{selectedUnit.Name}}</i>
+      <p>{{selectedUnit.Keywords}}</p>
+      <hr>
+      <div class="enc-stats-box left">
+        <p>Attack: 1d20 + {{selectedUnit.ATT + selectedUnit.MAN_ATT}}</p>
+        <p>Power: 1d20 + {{selectedUnit.PWR + selectedUnit.MAN_PWR}}</p>
+        <p>Morale: 1d20 + {{selectedUnit.MOR + selectedUnit.MAN_MOR}}</p>
+      </div>
+
+      <div class="enc-stats-box right">
+        <p>Defense: {{selectedUnit.DEF + selectedUnit.MAN_DEF}}</p>
+        <p>Toughness: {{selectedUnit.TGH + selectedUnit.MAN_TGH}}</p>
+        <p>Strength: {{selectedUnit.STR}} / {{selectedUnit.MAX_STR}}</p>
+      </div>
+    </div>
+
+    <button class="move-btn enc-btn-encounters-right" ng-click="nextUnit(1)">></button>
+  </div>
+</div>

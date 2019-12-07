@@ -1,0 +1,200 @@
+<div class="main-col left-col">
+
+  <div class="units-selector-box">
+    <button class="units-selector-units" ng-click="loadPartyUnits()">Load Player Party Units</button>
+    <button class="units-selector-hostiles" ng-click="loadHostileUnits()">Load Hostile Units</button>
+  </div>
+
+  <div ng-repeat="unit in availableUnits">
+    <div class="card" ng-click="selectUnit(unit)">
+      <i>{{unit.Name}}</i>
+      <p>{{unit.Keywords.Saved}}</p>
+      <hr>
+      <div class="stats-box left">
+        <p>Attack: 1d20 + {{unit.AUTO_ATT + unit.MAN_ATT}}</p>
+        <p>Power: 1d20 + {{unit.AUTO_PWR + unit.MAN_PWR}}</p>
+        <p>Morale: 1d20 + {{unit.AUTO_MOR + unit.MAN_MOR}}</p>
+      </div>
+
+      <div class="stats-box right">
+        <p>Defense: {{unit.AUTO_DEF + unit.MAN_DEF}}</p>
+        <p>Toughness: {{unit.AUTO_TGH + unit.MAN_TGH}}</p>
+        <p>Strength: {{unit.STR}} / {{unit.MAX_STR}}</p>
+      </div>
+    </div>
+  </div>
+
+  <button ng-click="createUnit()" ng-if="partyUnitsLoaded != null">Create new unit</button>
+
+</div>
+
+
+<div class="main-col right-col-man-units">
+  <div ng-if="selectedUnit !== null" class="vfill">
+
+    <div class="vfill">
+      <div>
+        <input type="text" ng-model="selectedUnit.Name" placeholder="Unit name" class="upt-name" size="55" maxlength="40">
+        <br>
+        <label class="upt-keywords">{{selectedUnit.Keywords.Unsaved}}</label>
+      </div>
+
+      <div class="upt-stats">
+        <!-- dynamically add options:
+            https://memorynotfound.com/dynamically-add-remove-options-select-javascript/ -->
+        <hr>
+        <div class="upt-desc">
+          <div class="upt-desc-spacer">
+            <label>Ancestry: </label>
+            <select ng-model="selectedUnit.Keywords.Ancestry" ng-options="x for x in ancestryOptions" ng-change="refreshKeywords()">
+              <option ng-if="selectedUnit.Keywords.Ancestry === null" ng-selected="selected" value="">Select an ancestry</option>
+            </select>
+            <br>
+          </div>
+
+          <div class="upt-desc-spacer">
+            <label>Experience: </label>
+            <select ng-model="selectedUnit.Keywords.Experience" ng-options="x for x in experienceOptions" ng-change="refreshKeywords()">
+              <option ng-if="selectedUnit.Keywords.Experience === null" ng-selected="selected" value="">Select an experience level</option>
+            </select>
+            <br>
+          </div>
+
+          <div class="upt-desc-spacer">
+            <label>Equipment: </label>
+            <select ng-model="selectedUnit.Keywords.Equipment" ng-options="x for x in equipmentOptions" ng-change="refreshKeywords()">
+              <option ng-if="selectedUnit.Keywords.Equipment === null" ng-selected="selected" value="">Select an equipment type</option>
+            </select>
+            <br>
+          </div>
+
+          <div class="upt-desc-spacer">
+            <label>Unit Type: </label>
+            <select ng-model="selectedUnit.Keywords.Type" ng-options="x for x in unitTypeOptions" ng-change="refreshKeywords()">
+              <option ng-if="selectedUnit.Keywords.Type === null" ng-selected="selected" value="">Select a unit type</option>
+            </select>
+            <br>
+          </div>
+
+          <hr>
+
+          <div class="upt-desc-spacer">
+            <div class="upt-troops">
+              <label>Troops: {{selectedUnit.Troops}}</label>
+            </div>
+            <div class="upt-troops">
+              <label>Level: {{level}} / 5</label>
+            </div>
+            <br>
+          </div>
+
+          <div class="upt-desc-spacer">
+            <div class="upt-troops">
+              <label>Level up at:</label>
+            </div>
+            <div class="upt-troops">
+              <label>{{maxTroops}} troops</label>
+            </div>
+          </div>
+
+          <div class="upt-desc-spacer">
+            <div>
+              <button ng-click="subtractTroops()">lose troops</button>
+              <input type="text" ng-model="potentialTroops" size="5" maxlength="3">
+              <button ng-click="addTroops()">gain troops</button>
+            </div>
+          </div>
+        </div>
+
+
+        <table class="upt-table">
+          <tr>
+            <th></th>
+            <th>Auto</th>
+            <th></th>
+            <th>Manual</th>
+            <th></th>
+            <th>Final</th>
+          </tr>
+          <tr>
+            <th>Att:</th>
+            <th><input ng-model="selectedUnit.AUTO_ATT" readonly></th>
+            <th>+</th>
+            <th><input type="number" ng-model="selectedUnit.MAN_ATT" ng-keyup="refreshSums()"></th>
+            <th>=</th>
+            <th><input ng-model="finalSums[0]" readonly></th>
+          </tr>
+          <tr>
+            <th>Pwr:</th>
+            <th><input ng-model="selectedUnit.AUTO_PWR" readonly></th>
+            <th>+</th>
+            <th><input type="number" ng-model="selectedUnit.MAN_PWR" ng-keyup="refreshSums()"></th>
+            <th>=</th>
+            <th><input ng-model="finalSums[1]" readonly></th>
+          </tr>
+          <tr>
+            <th>Mor:</th>
+            <th><input ng-model="selectedUnit.AUTO_MOR" readonly></th>
+            <th>+</th>
+            <th><input type="number" ng-model="selectedUnit.MAN_MOR" ng-keyup="refreshSums()"></th>
+            <th>=</th>
+            <th><input ng-model="finalSums[2]" readonly></th>
+          </tr>
+          <tr>
+            <th>Def:</th>
+            <th><input ng-model="selectedUnit.AUTO_DEF" readonly></th>
+            <th>+</th>
+            <th><input type="number" ng-model="selectedUnit.MAN_DEF" ng-keyup="refreshSums()"></th>
+            <th>=</th>
+            <th><input ng-model="finalSums[3]" readonly></th>
+          </tr>
+          <tr>
+            <th>Tgh:</th>
+            <th><input ng-model="selectedUnit.AUTO_TGH" readonly></th>
+            <th>+</th>
+            <th><input type="number" ng-model="selectedUnit.MAN_TGH" ng-keyup="refreshSums()"></th>
+            <th>=</th>
+            <th><input ng-model="finalSums[4]" readonly></th>
+          </tr>
+          <tr>
+            <th>Str:</th>
+            <th><input ng-model="selectedUnit.STR"></th>
+            <th>/</th>
+            <th><input ng-model="selectedUnit.MAX_STR" readonly></th>
+          </tr>
+        </table>
+      </div>
+
+      <div class="upt-notes">
+        <label>Notes:</label>
+        <input value="sample notes">
+      </div>
+
+      <hr>
+      <div class="upt-btns">
+        <p class="upt-p" style="color: green; float: left;" ng-if="saveMessage != null && saveSuccessful === true">{{saveMessage}}</p>
+        <p class="upt-p" style="color: red; float: left;" ng-if="saveMessage != null && saveSuccessful === false">{{saveMessage}}</p>
+        <br>
+        <button ng-click="killUnit()">kill this unit</button>
+        <button ng-click="saveUnit()">save</button>
+      </div>
+
+      <hr>
+
+      <div class="upt-p">
+        <div ng-repeat="activity in selectedUnit.ActivityLog track by $index">
+          <p>{{activity}}</p>
+        </div>
+      </div>
+
+    </div>
+
+
+
+  </div>
+
+  <div ng-if="selectedUnit === null">
+    <p style="margin: 10px 0 0 10px;">Select a unit to see its stats here.</p>
+  </div>
+
+</div>

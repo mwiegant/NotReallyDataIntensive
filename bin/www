@@ -1,0 +1,14 @@
+#!/usr/bin/env node
+
+/*
+ *        About: Script that starts the entire project
+ *    -[ point to this file in the Webstorm IDE to run the server ]-
+ */
+
+var app = require('../app');
+
+app.set('port', process.env.PORT || 5000);
+
+var server = app.listen(app.get('port'), function() {
+  console.log('Express server listening on port %s.', server.address().port);
+});
