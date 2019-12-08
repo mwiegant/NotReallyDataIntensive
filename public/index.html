@@ -3,42 +3,31 @@
 <head>
   <meta charset="UTF-8">
 
-  <link rel="stylesheet" type="text/css" href="css/cards.css">
-  <link rel="stylesheet" type="text/css" href="css/encounter-portraits.css">
-  <link rel="stylesheet" type="text/css" href="css/index.css">
-  <link rel="stylesheet" type="text/css" href="css/unit-portraits.css">
-  <link rel="stylesheet" type="text/css" href="css/encounters-page.css">
+  <link rel="stylesheet" type="text/css" href="index.css">
 
-  <title>Strongholds and Followers</title>
+  <title>Distributed Key-Value Store</title>
 </head>
 
 <body>
 
-  <div class="nav-sidebar">
-    <p class="nav-text">Navigation Links |
-      <a href="#!/encounters">Fight</a> |
-      <a href="#!/manage-units">Manage Units</a> |
-      <a href="#!/manage-encounters">Manage Encounters</a>
-    </p>
+  <div class="">
+    <h4>Distributed Key-Value Store</h4>
+    <hr>
+    <p>Supported Commands:</p>
+    <ul>
+      <li>GET <i>key</i></li>
+      <li>PUT <i>key</i> <i>value</i></li>
+    </ul>
+
+    <p>Command: <input id="command"> <button onclick="submitCommand()">Run</button></p>
+    <p>Output: <label id="output"></label></p>
+    <p>Console Logs:</p>
+    <textarea readonly="true" rows="10" cols="85" id="consoleLogs"></textarea>
   </div>
 
-  <div class="vfill" ng-view></div>
 
-  <!-- external library files MUST go first -->
-  <script src="js/lib/angular.js"></script>
-  <script src="js/lib/angular-route.js"></script>
-
-  <script src="js/bin/app.js"></script>
-  <script src="js/bin/router.js"></script>
-
-  <script src="js/common/encountersClient.js"></script>
-  <script src="js/common/unitConstants.js"></script>
-  <script src="js/common/unitsClient.js"></script>
-
-  <!--  Must add all controller files here -->
-  <script src="js/encounters.js"></script>
-  <script src="js/manageEncounters.js"></script>
-  <script src="js/manageUnits.js"></script>
+  <!-- javascript code -->
+  <script src="index.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,12 @@
+body {
+  display: block;
+  width: 550px; /* may need to adjust this width, over time */
+  height: 450px;
+  border: 1px solid grey;
+  margin-left: 10px;
+  padding: 10px;
+}
+
+textarea {
+  resize: none
+}
