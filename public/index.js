@@ -2,6 +2,9 @@
  * Functionality for the webpage
  */
 
+let lastCommand = null;
+let lastOutput = null;
+
 /*
   Onclick button handler for 'Run' button.
  */
@@ -34,6 +37,11 @@ function submitCommand() {
         else {
           output.innerHTML = `Failed to retrieve a value for key '${parsedCommand.key}': ${response.result}`;
         }
+
+        // immediately save each finished command to the UI
+        lastCommand = command;
+        lastOutput = output.innerHTML;
+        saveLastCommand(lastCommand, lastOutput);
       });
     }
 
@@ -45,6 +53,11 @@ function submitCommand() {
         else {
           output.innerHTML = `Failed to set the value for key '${parsedCommand.key}': ${response.result}`;
         }
+
+        // immediately save each finished command to the UI
+        lastCommand = command;
+        lastOutput = output.innerHTML;
+        saveLastCommand(lastCommand, lastOutput);
       });
     }
 
@@ -54,7 +67,6 @@ function submitCommand() {
     output.innerHTML = commandStatus.reason;
   }
 }
-
 
 function parseCommand(_command) {
   let commandTokens = _command.split(' ');
@@ -76,7 +88,6 @@ function parseCommand(_command) {
     return null;
   }
 }
-
 
 function checkIfValidCommand(parsedCommand) {
   const GET = 0;
@@ -131,6 +142,18 @@ function checkIfValidCommand(parsedCommand) {
   }
 }
 
+function saveLastCommand(command, output) {
+  if (command === null && output === null) {
+    return;
+  }
+
+  let textarea = document.getElementById('consoleLogs');
+  textarea.innerHTML = `> ${command}\n\t${output}\n` + textarea.innerHTML;
+}
+
+/*
+  Call the backend and get a value for a provided key
+ */
 function getValue(key, callback) {
   var xhttp = new XMLHttpRequest();
 
@@ -146,6 +169,9 @@ function getValue(key, callback) {
   xhttp.send();
 }
 
+/*
+  Call the backend and save a value for the provided key
+ */
 function putValue(key, value, callback) {
   let xhttp = new XMLHttpRequest();
 
