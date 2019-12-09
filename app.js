@@ -1,7 +1,5 @@
 /* File that defines the app and defines core libraries */
 
-const config = require('./bin/config.json');
-
 var express = require('express');
 var path = require('path');
 var logger = require('morgan');

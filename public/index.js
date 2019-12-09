@@ -1,6 +1,6 @@
-
-
-
+/**
+ * Functionality for the webpage
+ */
 
 /*
   Onclick button handler for 'Run' button.
@@ -15,7 +15,7 @@ function submitCommand() {
   let commandStatus = checkIfValidCommand(parsedCommand);
 
   // reset the output
-  output.innerHTML = '';
+  output.innerHTML = 'Running command...';
 
   if (commandStatus.valid) {
     // if command is valid, send to the backend
@@ -24,10 +24,15 @@ function submitCommand() {
     if (parsedCommand.command === 'get') {
       getValue(parsedCommand.key, function(response) {
         if (response.succeeded) {
-          output.innerHTML = `For key '${parsedCommand.key}', retrieved the value: '${response.result}'`;
+          if (response.result !== null) {
+            output.innerHTML = `Retrieved the value: ${response.result}`;
+          }
+          else {
+            output.innerHTML = `Failed to retrieve a value for the given key.`;
+          }
         }
         else {
-          output.innerHTML = `Retrieval of value for key '${parsedCommand.key}' failed: ${response.result}`;
+          output.innerHTML = `Failed to retrieve a value for key '${parsedCommand.key}': ${response.result}`;
         }
       });
     }
@@ -35,10 +40,10 @@ function submitCommand() {
     if (parsedCommand.command === 'put') {
       putValue(parsedCommand.key, parsedCommand.value, function(response) {
         if (response.succeeded) {
-          output.innerHTML = `Successfully set the value '${parsedCommand.value}' for key '${parsedCommand.key}'`;
+          output.innerHTML = `Successfully saved the value.`;
         }
         else {
-          output.innerHTML = `Setting the value '${parsedCommand.value}' for key '${parsedCommand.key}' failed: ${response.result}`;
+          output.innerHTML = `Failed to set the value for key '${parsedCommand.key}': ${response.result}`;
         }
       });
     }
@@ -93,9 +98,15 @@ function checkIfValidCommand(parsedCommand) {
 
   // check for 'put' command syntax
   else if (validCommands.indexOf(parsedCommand.command) === PUT) {
+    // ensure there is a value
     if (parsedCommand.value === null) {
       invalid = true;
       reason = `must provide a value for the given key.`;
+    }
+    // ensure the value is a number
+    else if (isNaN(parsedCommand.value)) {
+      invalid = true;
+      reason = `the provided value '${parsedCommand.value}' is not a number.`;
     }
   }
 
